@@ -1,0 +1,114 @@
+
+ /* main grid css code  */
+
+
+/* .main {
+
+    display: grid;
+    grid-template-columns: 400px 100px;
+    gap: 50px;
+
+} */
+
+
+
+
+/* x xxxxxxxxxxxxxxxxx left footer  */
+/* .leftSide {
+    background-color: rgb(235, 233, 236);
+    height: 50px;
+    display: flex;
+    gap: 50px;
+    align-content: center;
+
+}
+#left-side-Title {
+
+    font-style: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size:larger ;
+    font-weight:500;
+}
+
+.footer-add-Expense1 {
+
+    background-color: rgb(143, 143, 143);
+    
+    width: 100px;
+    height: 50px;
+    border-radius: 50px;
+    padding-left: 9px;
+
+    justify-content: center;
+    align-content: center;
+}
+a{
+    ;
+}
+
+/* xxxxxxxxxxxxxx  2 categories wala css hai  */
+
+/* .categories {
+
+}
+
+.categorie-list {
+
+    background-color: rgb(204, 202, 198);
+    display: grid;
+    grid-template-columns: 120px;
+    gap: 20px;
+}
+ */ 
+
+
+/* .categories {
+    background-color: chartreuse;
+}
+.Recent {
+    background-color: chocolate;
+}
+
+/* 1 div   of categories */
+/* #categories-1stDiv {
+    display: grid;
+    grid-template-columns: 100px;
+    gap: 50px;
+} */
+
+/* .left-Side-comander {
+
+    background-color: aquamarine;
+    display: grid;
+    grid-template-columns: 100px;
+    gap: 50px;
+} */ 
+/* 
+.main {
+
+    background-color: antiquewhite;
+} */
+.left-Side-comander {
+
+    background-color: rgb(86, 131, 116);
+
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+}
+
+
+.leftSide {
+
+    background-color: rgb(15, 110, 219);
+}
+
+.categories {
+
+    background-color: rgb(17, 180, 172);
+}
+
+.Recent {
+
+    background-color: rgb(15, 155, 15);
+}
