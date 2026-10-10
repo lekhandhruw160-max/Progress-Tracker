@@ -1,0 +1,48 @@
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    background: linear-gradient(90deg, #fffcfc);
+
+}
+
+.main-container {
+
+    background-color: #ece7e7;
+    
+    height: 600px;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(0 ,0,0,1);
+
+
+}
+
+.h1-singup {
+
+    align-self: center;
+    color: aliceblue;
+}
+
+.name-input {
+
+    position: relative;
+    margin-left: 50px;
+    margin-top: 50px;
+}
