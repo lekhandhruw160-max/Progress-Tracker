@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>document.documentElement.classList.add("no-anim");try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
   <title>Progress tracker - Dashboard</title>
-  <script src="../JS/dark-mode.js"></script>
+  <script src="dark-mode.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../CSS/style.css">
-  <link rel="stylesheet" href="../CSS/dashboard.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
@@ -24,7 +24,7 @@
       <span class="sr-only">Toggle sidebar</span>
     </label>
 
-    <a class="logo" href="../HTML/index.html">
+    <a class="logo" href="index.html">
       <span class="logo-mark" aria-hidden="true"></span>
       <span class="logo-name">Progress tracker</span>
     </a>
@@ -82,7 +82,7 @@
 
       <div class="sb-section">
         <p class="sb-heading">Menu</p>
-        <a class="sb-link" href="../HTML/dashboard.html" aria-current="page" title="Dashboard">
+        <a class="sb-link" href="dashboard.html" aria-current="page" title="Dashboard">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg>
           <span class="sb-label">Dashboard</span>
         </a>
@@ -134,7 +134,7 @@
             <h1 id="d-greeting" data-name="Alex">Welcome back</h1>
             <p id="d-date"></p>
           </div>
-          <a class="btn btn-orange" id="d-add-task" href="../HTML/add-task.html">Add a task</a>
+          <a class="btn btn-orange" id="d-add-task" href="add-task.html">Add a task</a>
         </div>
 
         <!-- Today -->
@@ -152,7 +152,7 @@
             </div>
             <div>
               <ul class="d-tasks" id="d-tasks"></ul>
-              <form class="d-add" id="d-add" action="../HTML/add-task.html" method="get">
+              <form class="d-add" id="d-add" action="add-task.html" method="get">
                 <label class="sr-only" for="d-new">New task</label>
                 <input id="d-new" name="name" type="text" maxlength="80" placeholder="Add a task for today" autocomplete="off">
                 <button class="btn btn-orange btn-sm" type="submit">Add</button>
@@ -251,7 +251,7 @@
             <div class="d-seg" id="d-filter" role="group" aria-label="Filter goals">
               <button type="button" data-filter="all" aria-pressed="true">All</button>
               <button type="button" data-filter="on" aria-pressed="false">On track</button>
-              <button type="button" data-filter="risk" aria-pressed="false" href="../HTML/goal.html">Needs attention</button>
+              <button type="button" data-filter="risk" aria-pressed="false" href="goal.html">Needs attention</button>
               <button type="button" data-filter="near" aria-pressed="false">Almost done</button>
             </div>
           </div>
@@ -365,7 +365,7 @@
 
       <section class="st-sec" aria-labelledby="st-h-tasks">
         <h3 id="st-h-tasks">Tasks</h3>
-        <div><a class="btn btn-orange btn-sm" href="../HTML/add-task.html">Add task</a></div>
+        <div><a class="btn btn-orange btn-sm" href="add-task.html">Add task</a></div>
         <ul class="st-tasks" id="st-tasks"></ul>
       </section>
 
@@ -469,8 +469,8 @@
     </div>
   </dialog>
 
-  <script src="../JS/tasks-store.js"></script>
-  <script src="../JS/dashboard.js"></script>
-  <script src="../JS/goal-detail.js"></script>
+  <script src="tasks-store.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="goal-detail.js"></script>
 </body>
 </html>
