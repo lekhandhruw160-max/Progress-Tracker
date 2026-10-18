@@ -1,17 +1,16 @@
 /* =========================================================
    dark-mode.js - light / dark switch for every page
    ---------------------------------------------------------
-   Add ONE line at the end of <head> in each HTML file:
-     <script src="../JS/dark-mode.js"></script>
+   Put ONE line in <head> of each HTML file:
+     <script src="dark-mode.js"></script>
 
-   What it does
-   1. Reads the saved mode ("pt-mode" in localStorage) and sets
-      html[data-mode="light|dark"] before the page paints.
-   2. Loads ../CSS/dark.css (same folder level as style.css).
-   3. index.html + dashboard.html: adds the Light/Dark button to
-      the header (.header-actions). Other pages follow the saved mode.
-   4. Dark mode only: 3D space backdrop, cursor parallax and card tilt.
-   Light mode stays exactly as your existing files.
+   1. Reads the saved mode ("pt-mode") and sets html[data-mode]
+      before the page paints.
+   2. Makes sure dark.css is loaded (same folder, or CSS/ folder).
+   3. index + dashboard: adds the Light / Dark button to the header.
+   4. Switching: phones / tablets get a soft full-screen cross-fade
+      (opacity only = smooth). Desktop gets a circular reveal.
+   No cursor effects.
    ========================================================= */
 (function () {
   'use strict';
@@ -23,12 +22,18 @@
   function write(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
 
   /* ---- 1. Mode, set immediately so there is no flash ---- */
-  var mode = read() === 'dark' ? 'dark' : 'light';
-  root.setAttribute('data-mode', mode);
+  root.setAttribute('data-mode', read() === 'dark' ? 'dark' : 'light');
 
-  /* ---- 2. Load dark.css next to style.css ---- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var desktop = window.matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
+  function isDark() { return root.getAttribute('data-mode') === 'dark'; }
+
+  /* ---- 2. dark.css: works for  JS/dark-mode.js -> CSS/dark.css  and for one flat folder ---- */
   var me = document.currentScript;
-  var href = (me && me.src) ? me.src.replace(/JS\/dark-mode\.js(\?.*)?$/i, 'CSS/dark.css') : '../CSS/dark.css';
+  var src = (me && me.src) || '';
+  var href = src
+    ? src.replace(/\/JS\/dark-mode\.js/i, '/CSS/dark.css').replace(/dark-mode\.js/i, 'dark.css')
+    : 'dark.css';
   if (!document.querySelector('link[data-dm-css]')) {
     if (document.readyState === 'loading') {
       document.write('<link rel="stylesheet" href="' + href + '" data-dm-css>');
@@ -39,16 +44,12 @@
     }
   }
 
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  function isDark() { return root.getAttribute('data-mode') === 'dark'; }
-
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn();
   }
 
   ready(function () {
-    /* ---- 3a. 3D space backdrop (hidden by CSS in light mode) ---- */
+    /* ---- 3a. Space backdrop (CSS shows it in dark mode only) ---- */
     var space = document.createElement('div');
     space.className = 'dm-space';
     space.setAttribute('aria-hidden', 'true');
@@ -60,10 +61,21 @@
       '<div class="dm-planet"><div class="dm-globe"></div><div class="dm-ring"></div></div>';
     document.body.insertBefore(space, document.body.firstChild);
 
+    var veil = document.createElement('div');
+    veil.className = 'dm-veil';
+    veil.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(veil);
+
+    /* Panels rise in 3D once when a page opens in dark mode (desktop only) */
+    if (isDark() && desktop.matches && !reduce.matches) {
+      root.classList.add('dm-enter');
+      setTimeout(function () { root.classList.remove('dm-enter'); }, 1400);
+    }
+
     /* ---- 3b. Toggle button (index + dashboard only) ---- */
-    var onToggle = /(^|\/)(index|dashboard)\.html?$/i.test(location.pathname) || /\/$/.test(location.pathname);
+    var onToggle = /(^|\/)(index|dashboard)(_\d+)?\.html?$/i.test(location.pathname) || /\/$/.test(location.pathname);
     var actions = document.querySelector('.header-actions');
-    var btn = null, label = null;
+    var btn = null, label = null, busy = false;
 
     if (onToggle && actions) {
       btn = document.createElement('button');
@@ -77,7 +89,8 @@
         '</span></span><span class="theme-text dm-label"></span>';
       label = btn.querySelector('.dm-label');
       actions.insertBefore(btn, actions.firstChild);
-      btn.addEventListener('click', function (e) {
+      btn.addEventListener('click', function () {
+        if (busy) return;
         var r = btn.getBoundingClientRect();
         setMode(isDark() ? 'light' : 'dark', r.left + r.width / 2, r.top + r.height / 2);
       });
@@ -93,91 +106,62 @@
     }
     sync();
 
-    /* ---- Switching (circular reveal when the browser supports it) ---- */
+    function apply(next) {
+      root.setAttribute('data-mode', next);
+      write(next);
+      sync();
+    }
+
+    /* ---- Switching ---- */
     function setMode(next, x, y) {
-      function run() { root.setAttribute('data-mode', next); write(next); sync(); clearTilt(); }
-      if (document.startViewTransition && !reduce.matches && x != null) {
-        var vt = document.startViewTransition(run);
+      if (next === (isDark() ? 'dark' : 'light')) return;
+
+      if (reduce.matches) { apply(next); return; }
+
+      busy = true;
+
+      /* Desktop: circular reveal from the button */
+      if (desktop.matches && document.startViewTransition && x != null) {
+        var vt = document.startViewTransition(function () { apply(next); });
         vt.ready.then(function () {
           var r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
           root.animate(
             { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] },
-            { duration: 700, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
+            { duration: 650, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
           );
         }, function () {});
-      } else {
-        root.classList.add('dm-fade');
-        run();
-        setTimeout(function () { root.classList.remove('dm-fade'); }, 520);
+        vt.finished.then(function () { busy = false; }, function () { busy = false; });
+        return;
       }
+
+      /* Phones / tablets: fade a solid layer in, flip underneath, fade out */
+      var bg = '#050b1f';
+      if (next === 'light') {
+        bg = (getComputedStyle(root).getPropertyValue('--bg') || '').trim() || '#f3f6fb';
+      }
+      veil.style.background = bg;
+      veil.style.transitionDuration = '180ms';
+      veil.classList.add('on');
+
+      setTimeout(function () {
+        root.classList.add('dm-switching');           // no half-way transitions while flipping
+        apply(next);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            root.classList.remove('dm-switching');
+            veil.style.transitionDuration = '320ms';
+            veil.classList.remove('on');
+            setTimeout(function () { busy = false; }, 340);
+          });
+        });
+      }, 200);
     }
 
     /* Keep other open tabs / pages in step */
     window.addEventListener('storage', function (e) {
-      if (e.key === KEY) { root.setAttribute('data-mode', e.newValue === 'dark' ? 'dark' : 'light'); sync(); clearTilt(); }
+      if (e.key === KEY) { root.setAttribute('data-mode', e.newValue === 'dark' ? 'dark' : 'light'); sync(); }
     });
 
-    /* ---- 4a. Cursor parallax for the backdrop (cheap: only .dm-space changes) ---- */
-    var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
-    function frame() {
-      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
-      space.style.setProperty('--px', cx.toFixed(3));
-      space.style.setProperty('--py', cy.toFixed(3));
-      raf = (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) ? requestAnimationFrame(frame) : 0;
-    }
-    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
-
-    window.addEventListener('pointermove', function (e) {
-      if (!isDark() || reduce.matches || !finePointer.matches) return;
-      tx = (e.clientX / innerWidth - 0.5) * 2;
-      ty = (e.clientY / innerHeight - 0.5) * 2;
-      kick();
-      tilt(e);
-    }, { passive: true });
-
-    var scrollTick = 0;
-    window.addEventListener('scroll', function () {
-      if (!isDark() || reduce.matches || scrollTick) return;
-      scrollTick = requestAnimationFrame(function () {
-        space.style.setProperty('--sc', String(window.scrollY));
-        scrollTick = 0;
-      });
-    }, { passive: true });
-
-    /* ---- 4b. Card tilt: only the card under the pointer, small angles ---- */
-    var TILT = '.d-panel:not(.d-today):not(.d-stats), .stat, .tf-card, .gd-stat';
-    var cur = null, pending = null, tiltRaf = 0;
-
-    function clearTilt() {
-      if (cur) { reset(cur); cur = null; }
-    }
-    function reset(el) {
-      el.classList.remove('dm-tilt');
-      el.style.removeProperty('--rx'); el.style.removeProperty('--ry');
-      el.style.removeProperty('--gx'); el.style.removeProperty('--gy');
-    }
-    function tilt(e) {
-      if (e.pointerType && e.pointerType !== 'mouse') return;
-      var el = e.target.closest ? e.target.closest(TILT) : null;
-      if (el !== cur) { clearTilt(); cur = el; if (el) el.classList.add('dm-tilt'); }
-      if (!el) return;
-      pending = e;
-      if (!tiltRaf) tiltRaf = requestAnimationFrame(function () {
-        tiltRaf = 0;
-        if (!cur || !pending) return;
-        var r = cur.getBoundingClientRect();
-        var px = (pending.clientX - r.left) / r.width, py = (pending.clientY - r.top) / r.height;
-        var max = r.width > 700 ? 1.8 : (r.width > 420 ? 3.2 : 5);   // big panels move less
-        cur.style.setProperty('--ry', ((px - 0.5) * 2 * max).toFixed(2) + 'deg');
-        cur.style.setProperty('--rx', ((0.5 - py) * 2 * max).toFixed(2) + 'deg');
-        cur.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-        cur.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
-      });
-    }
-    document.addEventListener('pointerleave', clearTilt);
-    window.addEventListener('blur', clearTilt);
-
-    /* Small public hook if you ever want to switch from your own code */
     window.PTDark = { set: function (m) { setMode(m === 'dark' ? 'dark' : 'light'); }, get: function () { return isDark() ? 'dark' : 'light'; } };
   });
 })();

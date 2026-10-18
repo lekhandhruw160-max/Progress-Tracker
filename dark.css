@@ -73,11 +73,7 @@ html[data-mode="dark"] body {
   --blur: blur(18px) saturate(150%);
   --on-accent: #04102a;
 
-  background:
-    radial-gradient(1100px 700px at 12% -8%, rgba(44, 92, 220, 0.3), transparent 62%),
-    radial-gradient(900px 620px at 96% 8%, rgba(110, 70, 220, 0.24), transparent 60%),
-    linear-gradient(180deg, #050c26 0%, #030716 70%);
-  background-attachment: fixed;
+  background: transparent;
   color: var(--navy);
 }
 
@@ -94,13 +90,15 @@ html[data-mode="dark"] .dm-space {
   pointer-events: none;
   perspective: 900px;
   perspective-origin: 50% 40%;
+  background:
+    radial-gradient(1100px 700px at 12% -8%, rgba(44, 92, 220, 0.3), transparent 62%),
+    radial-gradient(900px 620px at 96% 8%, rgba(110, 70, 220, 0.24), transparent 60%),
+    linear-gradient(180deg, #050c26 0%, #030716 70%);
 }
 
 .dm-layer {
   position: absolute;
   inset: -12%;
-  transform: translate3d(calc(var(--px, 0) * var(--d) * -1px), calc(var(--py, 0) * var(--d) * -1px - var(--sc, 0) * var(--d) * 0.02px), 0);
-  will-change: transform;
 }
 .dm-stars-1 {
   --d: 6;
@@ -137,8 +135,6 @@ html[data-mode="dark"] .dm-space {
 .dm-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(44px);
-  transform: translate3d(calc(var(--px, 0) * var(--d) * -1px), calc(var(--py, 0) * var(--d) * -1px), 0);
   animation: dm-float 14s ease-in-out infinite alternate;
 }
 .dm-orb-a { --d: 18; top: -12%; left: -10%; width: min(60vw, 640px); aspect-ratio: 1; background: radial-gradient(circle at 35% 35%, rgba(70, 130, 255, 0.5), rgba(40, 50, 170, 0.22) 55%, transparent 72%); }
@@ -153,8 +149,6 @@ html[data-mode="dark"] .dm-space {
   right: 7%;
   width: clamp(90px, 15vw, 220px);
   aspect-ratio: 1;
-  --d: 34;
-  transform: translate3d(calc(var(--px, 0) * var(--d) * -1px), calc(var(--py, 0) * var(--d) * -1px), 0);
   transform-style: preserve-3d;
   opacity: 0.85;
   animation: dm-float 16s ease-in-out infinite alternate;
@@ -173,7 +167,7 @@ html[data-mode="dark"] .dm-space {
   inset: 0;
   background: repeating-linear-gradient(172deg, rgba(255, 255, 255, 0.07) 0 7%, transparent 7% 15%);
   background-size: 200% 100%;
-  animation: dm-bands 22s linear infinite;
+  
 }
 @keyframes dm-bands { to { background-position: 200% 0; } }
 .dm-ring {
@@ -345,67 +339,80 @@ html[data-mode="dark"] .theme-opt[aria-pressed="true"] { background: rgba(255, 2
    ========================================================= */
 /* Panels rise into place in 3D when dark mode is on / the page opens.
    "backwards" fill so it never fights the hover tilt afterwards. */
-html[data-mode="dark"] :is(.d-panel, .stat, .tf-card, .gd-stat, .flip, .tilt-card) {
+html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .tf-card, .gd-stat, .flip, .tilt-card) {
   animation: dm-rise 0.85s cubic-bezier(0.2, 0.85, 0.25, 1) backwards;
 }
-html[data-mode="dark"] :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(2) { animation-delay: 0.06s; }
-html[data-mode="dark"] :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(3) { animation-delay: 0.12s; }
-html[data-mode="dark"] :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(4) { animation-delay: 0.18s; }
-html[data-mode="dark"] :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(n + 5) { animation-delay: 0.24s; }
+html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(2) { animation-delay: 0.06s; }
+html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(3) { animation-delay: 0.12s; }
+html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(4) { animation-delay: 0.18s; }
+html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .gd-stat, .flip, .tilt-card):nth-child(n + 5) { animation-delay: 0.24s; }
 @keyframes dm-rise {
   from { opacity: 0; transform: perspective(1000px) translate3d(0, 28px, -60px) rotateX(14deg); }
   to   { opacity: 1; transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0); }
 }
 
-/* Cursor-driven tilt (dark-mode.js adds .dm-tilt to the card under the pointer) */
-html[data-mode="dark"] .dm-tilt {
-  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
-  transition: transform 0.18s ease-out, box-shadow 0.3s;
-  box-shadow: var(--glass-shadow), 0 0 46px -10px rgba(91, 157, 255, 0.35);
-  background-image:
-    radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(140, 180, 255, 0.16), transparent 62%),
-    var(--glass);
-}
-
 /* Sidebar links glide forward a little */
-html[data-mode="dark"] .sb-link:hover { transform: translateX(3px); }
-
-/* Smooth cross-fade when no View Transitions support */
-html.dm-fade, html.dm-fade *, html.dm-fade *::before, html.dm-fade *::after {
-  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease !important;
+@media (hover: hover) and (min-width: 901px) {
+  html[data-mode="dark"] .sb-link:hover { transform: translateX(3px); }
 }
+
 /* Circular reveal from the toggle button */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 ::view-transition-old(root) { z-index: 1; }
 ::view-transition-new(root) { z-index: 2; }
 
 /* =========================================================
-   RESPONSIVE
+   SWITCHING (mobile-safe cross-fade) + SMOOTH DRAWER
    ========================================================= */
+/* A full-screen layer fades in, the mode flips underneath, it fades out.
+   Only opacity animates, so it stays smooth on phones. */
+.dm-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.dm-veil.on { opacity: 1; }
+html.dm-switching *, html.dm-switching *::before, html.dm-switching *::after { transition: none !important; }
+
+/* style.css overwrites the drawer's transition-property and drops "visibility",
+   so on phones the sidebar vanished instantly when closing. Restore it. */
 @media (max-width: 900px) {
-  html[data-mode="dark"] .dm-planet { top: 9%; right: -2%; opacity: 0.6; }
-}
-@media (max-width: 700px) {
-  html[data-mode="dark"] body { --blur: blur(12px) saturate(140%); }
-  html[data-mode="dark"] .dm-orb { filter: blur(30px); }
-  html[data-mode="dark"] .dm-stars-3 { display: none; }
-  html[data-mode="dark"] .dm-planet { width: 84px; opacity: 0.45; }
-  html[data-mode="dark"] .theme-btn.dm-toggle { padding: 0 0.7rem; }
-}
-/* backdrop-filter on the header makes it the containing block of the
-   mobile (position: fixed) theme menu, so anchor it to the header */
-@media (max-width: 600px) {
-  html[data-mode="dark"] .theme-menu { top: calc(100% + 0.5rem); }
+  html .sidebar { transition-property: transform, visibility; will-change: transform; }
 }
 
-/* Touch devices: no hover tilt, keep it light */
-@media (hover: none) {
-  html[data-mode="dark"] .dm-tilt { transform: none; }
+/* =========================================================
+   RESPONSIVE / PHONES: no backdrop blur, no background motion.
+   Glass look is kept with more opaque panels + soft borders.
+   ========================================================= */
+@media (max-width: 900px), (hover: none) {
+  html[data-mode="dark"] * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+  html[data-mode="dark"] body {
+    --glass: linear-gradient(145deg, rgba(30, 48, 108, 0.86), rgba(10, 18, 50, 0.9));
+    --glass-strong: linear-gradient(145deg, rgba(30, 48, 108, 0.95), rgba(8, 15, 44, 0.97));
+  }
+  html[data-mode="dark"] .header { background: rgba(6, 12, 34, 0.94); }
+  html[data-mode="dark"] .sidebar { background: linear-gradient(180deg, rgba(10, 20, 58, 0.98), rgba(4, 9, 28, 0.99)); }
+  html[data-mode="dark"] .footer { background: rgba(3, 8, 24, 0.94); }
+  html[data-mode="dark"] :is(.hero, .au-stage, .cube-wrap, .st-nav) { background: linear-gradient(145deg, rgba(24, 44, 110, 0.9), rgba(6, 13, 40, 0.92)); }
+  html[data-mode="dark"] .scrim { background: rgba(2, 6, 20, 0.7); }
+  html[data-mode="dark"] .au-toast { background: rgba(14, 26, 72, 0.97); }
+
+  .dm-layer, .dm-orb, .dm-planet, .dm-ring { animation: none !important; }
+}
+@media (max-width: 700px) {
+  html[data-mode="dark"] .dm-stars-3, html[data-mode="dark"] .dm-planet { display: none; }
+  html[data-mode="dark"] .theme-btn.dm-toggle { padding: 0 0.7rem; }
+}
+@media (max-width: 900px) {
+  html[data-mode="dark"] .dm-planet { top: 9%; right: -2%; opacity: 0.6; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dm-layer, .dm-orb, .dm-planet, .dm-globe::before, .dm-ring,
-  html[data-mode="dark"] :is(.d-panel, .stat, .tf-card, .gd-stat, .flip, .tilt-card) { animation: none !important; }
-  .dm-toggle .dm-coin-in { transition-duration: 0.01s; }
-  html[data-mode="dark"] .dm-tilt { transform: none; }
+  html[data-mode="dark"].dm-enter :is(.d-panel, .stat, .tf-card, .gd-stat, .flip, .tilt-card) { animation: none !important; }
+  .dm-toggle .dm-coin-in, .dm-veil { transition-duration: 0.01s; }
 }
