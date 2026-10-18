@@ -1,0 +1,214 @@
+/* =========================================================
+   Auth + settings pages (signup, login, forgot, settings)
+   Loads AFTER style.css and reuses its tokens, .btn, .header,
+   .logo, .auth-input, .auth-eye, .auth-check and the .obj 3D scene.
+   ========================================================= */
+
+.au {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  max-width: 1180px;
+  padding: clamp(1rem, 3vw, 2rem) 1.25rem 3rem;
+  min-height: calc(100dvh - var(--header-h));
+}
+
+/* ---------- Left: 3D stage ---------- */
+.au-stage {
+  --focus: #fff;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  min-height: 520px;
+  border-radius: 28px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.au-cells {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 6px;
+  padding: 6px;
+}
+.au-cells i {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  transition: background-color 1.2s ease, transform 1.2s ease, box-shadow 1.2s ease;
+}
+.au-cells i:nth-child(3n + 1) { --c: var(--teal); }
+.au-cells i:nth-child(3n + 2) { --c: var(--orange); }
+.au-cells i:nth-child(3n)     { --c: var(--sky); }
+.au-cells i:hover {
+  background: var(--c);
+  box-shadow: 0 0 28px var(--c);
+  transform: scale(0.7) rotate(45deg);
+  transition-duration: 0s;
+}
+
+.au-copy { position: relative; z-index: 1; display: grid; gap: 0.7rem; pointer-events: none; }
+.au-copy h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 800; max-width: 16ch; }
+.au-copy p { max-width: 34ch; color: rgba(255, 255, 255, 0.82); }
+
+.au-stage .hero-visual { z-index: 1; min-height: 340px; }
+.au-stage .obj { transform: rotateX(var(--hx, 10deg)) rotateY(var(--hy, -18deg)); transition: transform 0.25s ease-out; }
+.au-stage .obj.spin { animation: au-spin 0.9s cubic-bezier(0.3, 1.1, 0.4, 1); }
+@keyframes au-spin { from { rotate: y 0deg; } to { rotate: y 360deg; } }
+
+/* ---------- Right: the form card ---------- */
+.au-side { display: grid; align-content: center; min-width: 0; perspective: 1200px; }
+
+.au-card {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 24px 56px color-mix(in srgb, var(--navy) 14%, transparent);
+  animation: auth-in 0.6s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  transform-origin: 50% 0;
+}
+.au-card h1 { font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 800; }
+.au-sub { margin-top: -0.4rem; color: var(--muted); font-weight: 600; }
+
+.au-form { display: grid; gap: 0.85rem; margin-top: 0.3rem; }
+.au-form[hidden], .au-step[hidden] { display: none; }
+.au-step { display: grid; gap: 0.85rem; animation: au-flip 0.5s cubic-bezier(0.2, 0.9, 0.25, 1) both; transform-origin: 50% 0; }
+@keyframes au-flip { from { opacity: 0; transform: perspective(900px) rotateX(-18deg) translateY(-14px); } to { opacity: 1; transform: none; } }
+
+.au-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem; }
+.au-link { padding: 0; border: 0; background: none; color: var(--navy); font: 800 0.92rem var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.au-foot { text-align: center; color: var(--muted); font-weight: 600; }
+.au-foot a { color: var(--navy); font-weight: 800; text-underline-offset: 3px; }
+
+.au-card .btn svg { width: 20px; height: 20px; flex: none; }
+.au-card .auth-input { padding-right: 1rem; }
+.au-card .auth-wrap .auth-input { padding-right: 3rem; }
+.au-note { padding: 0.7rem 0.9rem; border-radius: 12px; background: var(--bg); font-size: 0.9rem; font-weight: 700; }
+.au-note:empty { display: none; }
+.au-note b { font-family: var(--font-head); letter-spacing: 0.12em; }
+
+/* Password strength: four bars that fill as the password gets stronger */
+.au-strength { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 0.1rem; }
+.au-strength i { height: 6px; border-radius: 3px; background: var(--line); transition: background-color 0.25s; }
+.au-strength[data-s="1"] i:nth-child(-n + 1) { background: #d93025; }
+.au-strength[data-s="2"] i:nth-child(-n + 2) { background: var(--orange); }
+.au-strength[data-s="3"] i:nth-child(-n + 3) { background: var(--sky); }
+.au-strength[data-s="4"] i { background: var(--teal); }
+
+/* Six-box code entry */
+.au-otp { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(0.3rem, 1.5vw, 0.6rem); }
+.au-otp input {
+  width: 100%;
+  height: 58px;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--navy);
+  font: 800 1.4rem var(--font-head);
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.au-otp input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 35%, transparent); transform: translateY(-2px); }
+.au-otp[data-bad] input { border-color: #d93025; }
+
+/* Steps indicator (forgot password) */
+.au-steps { display: flex; gap: 6px; }
+.au-steps i { flex: 1; height: 6px; border-radius: 3px; background: var(--line); transition: background-color 0.3s; }
+.au-steps i.on { background: var(--teal); }
+
+.au-done { display: grid; justify-items: center; gap: 0.8rem; padding: 1rem 0; text-align: center; }
+.au-done .tick { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--teal); color: var(--navy); font-size: 2rem; font-weight: 800; animation: au-pop 0.6s cubic-bezier(0.3, 1.4, 0.4, 1) both; }
+@keyframes au-pop { from { transform: perspective(400px) rotateY(180deg) scale(0.4); } to { transform: none; } }
+
+/* ---------- Settings ---------- */
+.st { display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: 1.5rem; max-width: 1040px; margin: 0 auto; padding: clamp(1rem, 3vw, 2rem) 1.25rem 3rem; }
+.st-nav { position: sticky; top: calc(var(--header-h) + 1rem); display: grid; gap: 0.25rem; padding: 0.6rem; border-radius: 20px; background: var(--navy); --focus: #fff; }
+.st-tab { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.85rem; border: 0; border-radius: 12px; background: transparent; color: rgba(255, 255, 255, 0.82); font: 700 1rem var(--font-body); text-align: left; cursor: pointer; transition: background-color 0.2s, color 0.2s; }
+.st-tab svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.st-tab:hover { background: rgba(255, 255, 255, 0.09); color: #fff; }
+.st-tab[aria-selected="true"] { background: var(--teal); color: var(--navy); }
+
+.st-panel { display: grid; gap: 1.25rem; padding: clamp(1.1rem, 3vw, 1.75rem); border: 1px solid var(--line); border-radius: 24px; background: var(--surface); animation: au-flip 0.45s cubic-bezier(0.2, 0.9, 0.25, 1) both; }
+.st-panel[hidden] { display: none; }
+.st-panel h1 { font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 800; }
+.st-panel > header p { margin-top: 0.3rem; color: var(--muted); font-weight: 600; }
+.st-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
+.st-grid .wide { grid-column: 1 / -1; }
+.st-field { display: grid; gap: 0.35rem; min-width: 0; }
+.st-field > label { font-size: 0.92rem; font-weight: 800; }
+.st-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.6rem; }
+
+.st-who { display: flex; align-items: center; gap: 1rem; }
+.st-avatar { display: grid; place-items: center; width: 64px; height: 64px; flex: none; border-radius: 20px; background: var(--navy); color: #fff; font: 800 1.6rem var(--font-head); transform: perspective(300px) rotateY(-12deg); transition: transform 0.5s; }
+.st-who:hover .st-avatar { transform: perspective(300px) rotateY(12deg); }
+.st-who strong { display: block; font-family: var(--font-head); }
+.st-who span { color: var(--muted); font-weight: 600; word-break: break-all; }
+
+/* Theme cards tilt in 3D on hover */
+.st-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.85rem; perspective: 900px; }
+.st-theme { display: grid; gap: 0.6rem; padding: 0.9rem; border: 2px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--navy); font: 800 0.98rem var(--font-body); text-align: left; cursor: pointer; transition: transform 0.35s, border-color 0.2s, box-shadow 0.35s; }
+.st-theme:hover { transform: rotateX(8deg) rotateY(-8deg) translateZ(14px); box-shadow: 0 18px 30px color-mix(in srgb, var(--navy) 18%, transparent); }
+.st-theme[aria-pressed="true"] { border-color: var(--navy); background: var(--bg); }
+.st-theme .dots i { width: 22px; height: 22px; }
+
+/* Switches */
+.st-list { display: grid; }
+.st-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+.st-item:first-child { border-top: 0; }
+.st-item strong { display: block; font-weight: 800; }
+.st-item span { color: var(--muted); font-size: 0.92rem; }
+.st-switch { position: relative; flex: none; width: 52px; height: 30px; }
+.st-switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.st-switch b { position: absolute; inset: 0; border-radius: 999px; background: var(--line); transition: background-color 0.2s; }
+.st-switch b::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); transition: transform 0.25s cubic-bezier(0.3, 1.4, 0.4, 1); }
+.st-switch input:checked + b { background: var(--teal); }
+.st-switch input:checked + b::after { transform: translateX(22px); }
+.st-switch input:focus-visible + b { outline: 3px solid var(--navy); outline-offset: 3px; }
+
+.st-danger { border-color: color-mix(in srgb, #b93a0c 35%, var(--line)); }
+.st-btn-danger { background: transparent; color: #b93a0c; border-color: color-mix(in srgb, #b93a0c 45%, var(--line)); box-shadow: 0 4px 0 color-mix(in srgb, #b93a0c 20%, var(--line)); }
+.st-btn-danger:hover, .st-btn-danger.is-armed { background: #b93a0c; color: #fff; border-color: #b93a0c; }
+
+.au-toast { position: fixed; left: 50%; bottom: 1.5rem; z-index: 120; max-width: calc(100vw - 2rem); padding: 0.75rem 1.2rem; border-radius: 14px; background: var(--navy); color: #fff; font-weight: 700; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); transform: translate(-50%, 0); transition: opacity 0.3s, transform 0.3s; }
+.au-toast[hidden] { display: none; }
+.au-toast.hide { opacity: 0; transform: translate(-50%, 12px); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .au { grid-template-columns: minmax(0, 1fr); }
+  .au-stage { order: 2; min-height: 0; }
+  .au-side { order: 1; }
+  .au-stage .hero-visual { min-height: 320px; }
+  .st { grid-template-columns: minmax(0, 1fr); }
+  .st-nav { position: static; display: flex; overflow-x: auto; gap: 0.25rem; }
+  .st-tab { white-space: nowrap; padding: 0.6rem 0.8rem; }
+}
+@media (max-width: 600px) {
+  .au { padding: 0.75rem 0.75rem 2.5rem; }
+  .au-stage { border-radius: 22px; }
+  .au-stage .obj { scale: 0.8; }
+  .au-card { border-radius: 22px; }
+  .au-otp input { height: 50px; font-size: 1.2rem; }
+  .st-grid { grid-template-columns: minmax(0, 1fr); }
+  .header .d-btn-ghost, .header .au-top-link { font-size: 0.9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .au-card, .au-step, .st-panel, .au-done .tick, .au-stage .obj.spin { animation: none; }
+  .au-stage .obj, .st-theme, .st-avatar { transition-duration: 0.01s; }
+}
+
+@media (max-width: 600px) { .header .au-top-link { display: none; } }
+.au-top-link { color: var(--muted); font-weight: 700; }

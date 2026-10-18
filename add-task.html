@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Add a task - Progress tracker</title>
+  <script src="../JS/dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/dashboard.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <a class="logo" href="../HTML/dashboard.html">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+    <div class="header-actions">
+      <a class="d-btn-ghost" href="../HTML/dashboard.html">Back to dashboard</a>
+    </div>
+  </header>
+
+  <main id="main" class="tf">
+    <form class="d-panel tf-card" id="tf" novalidate>
+      <div>
+        <h1 id="tf-title">Add a task</h1>
+        <p class="tf-lead" id="tf-lead">Plan when you will do it and how long you will give it.</p>
+      </div>
+
+      <div class="tf-field">
+        <label for="tf-name">Task name</label>
+        <input id="tf-name" type="text" maxlength="80" placeholder="For example: Practice typing" autocomplete="off">
+        <p class="tf-err" id="tf-name-err" role="alert" hidden></p>
+      </div>
+
+      <fieldset class="tf-field">
+        <legend>How often</legend>
+        <div class="tf-choices">
+          <label class="tf-choice"><input type="radio" name="repeat" value="daily" checked><span>Every day</span></label>
+          <label class="tf-choice"><input type="radio" name="repeat" value="once"><span>One day only</span></label>
+        </div>
+        <div class="tf-date" id="tf-date-wrap" hidden>
+          <label for="tf-date">Which day</label>
+          <input id="tf-date" type="date">
+          <p class="tf-err" id="tf-date-err" role="alert" hidden></p>
+        </div>
+      </fieldset>
+
+      <div class="tf-field">
+        <label for="tf-start">Start time</label>
+        <input id="tf-start" type="time" value="09:00">
+        <p class="tf-err" id="tf-start-err" role="alert" hidden></p>
+      </div>
+
+      <fieldset class="tf-field">
+        <legend>Total time to give</legend>
+        <div class="tf-dur">
+          <input id="tf-h" type="number" min="0" max="16" step="1" inputmode="numeric" value="0" aria-label="Hours">
+          <span>h</span>
+          <input id="tf-m" type="number" min="0" max="59" step="1" inputmode="numeric" value="30" aria-label="Minutes">
+          <span>min</span>
+        </div>
+        <div class="tf-chips" id="tf-chips" role="group" aria-label="Quick choices">
+          <button class="d-btn-ghost" type="button" data-min="15">15 min</button>
+          <button class="d-btn-ghost" type="button" data-min="30">30 min</button>
+          <button class="d-btn-ghost" type="button" data-min="45">45 min</button>
+          <button class="d-btn-ghost" type="button" data-min="60">1 h</button>
+          <button class="d-btn-ghost" type="button" data-min="90">1 h 30</button>
+          <button class="d-btn-ghost" type="button" data-min="120">2 h</button>
+        </div>
+        <p class="tf-err" id="tf-dur-err" role="alert" hidden></p>
+      </fieldset>
+
+      <p class="tf-summary" id="tf-sum" aria-live="polite"></p>
+
+      <div class="tf-actions">
+        <button class="d-btn-ghost d-btn-danger" type="button" id="tf-remove" hidden>Remove task</button>
+        <a class="d-btn-ghost" href="../HTML/dashboard.html">Cancel</a>
+        <button class="btn btn-orange" type="submit" id="tf-save">Save task</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="../JS/tasks-store.js"></script>
+  <script src="../JS/add-task.js"></script>
+</body>
+</html>

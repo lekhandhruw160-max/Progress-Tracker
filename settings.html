@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Settings - Progress tracker</title>
+  <script src="../JS/dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/auth.css">
+</head>
+<body data-page="settings">
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <a class="logo" href="../HTML/dashboard.html">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+    <div class="header-actions">
+      <a class="btn btn-ghost btn-sm" href="../HTML/dashboard.html">Back to dashboard</a>
+    </div>
+  </header>
+
+  <main id="main" class="st">
+    <div class="st-nav" role="tablist" aria-label="Settings sections" aria-orientation="vertical">
+        <button class="st-tab" role="tab" id="tab-profile" aria-controls="p-profile" aria-selected="true" type="button" data-tab="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>Profile</button>
+        <button class="st-tab" role="tab" id="tab-security" aria-controls="p-security" aria-selected="false" type="button" data-tab="security"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Password</button>
+        <button class="st-tab" role="tab" id="tab-appearance" aria-controls="p-appearance" aria-selected="false" type="button" data-tab="appearance"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.6 1.7-1.6H16a5 5 0 0 0 5-5c0-3.9-4-7.3-9-7.3z"/></svg>Appearance</button>
+        <button class="st-tab" role="tab" id="tab-notifications" aria-controls="p-notifications" aria-selected="false" type="button" data-tab="notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Notifications</button>
+        <button class="st-tab" role="tab" id="tab-account" aria-controls="p-account" aria-selected="false" type="button" data-tab="account"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Account</button>
+    </div>
+
+    <div class="st-content">
+      <!-- Profile -->
+      <section class="st-panel" role="tabpanel" id="p-profile" aria-labelledby="tab-profile">
+        <header><h1>Profile</h1><p>This is how you appear in the app.</p></header>
+        <div class="st-who"><span class="st-avatar" id="st-avatar" aria-hidden="true">A</span><div><strong id="st-name-show">Alex</strong><span id="st-email-show">alex@example.com</span></div></div>
+        <form id="f-profile" novalidate>
+          <div class="st-grid">
+            <div class="st-field auth-field"><label for="pf-name">Full name</label><input class="auth-input" id="pf-name" type="text" maxlength="60" autocomplete="name"><p class="auth-error" aria-live="polite"></p></div>
+            <div class="st-field auth-field"><label for="pf-email">Email</label><input class="auth-input" id="pf-email" type="email" autocomplete="email"><p class="auth-error" aria-live="polite"></p></div>
+            <div class="st-field auth-field"><label for="pf-goal">Daily time goal (hours)</label><input class="auth-input" id="pf-goal" type="number" min="0.5" max="16" step="0.5" inputmode="decimal"><p class="auth-error" aria-live="polite"></p></div>
+          </div>
+          <div class="st-actions" style="margin-top:1.25rem"><button class="btn btn-orange" type="submit">Save changes</button></div>
+        </form>
+      </section>
+
+      <!-- Password -->
+      <section class="st-panel" role="tabpanel" id="p-security" aria-labelledby="tab-security" hidden>
+        <header><h1>Change password</h1><p>Use 8 or more characters with a letter and a number.</p></header>
+        <p class="au-note" id="sec-note" role="status"></p>
+        <form id="f-pass" novalidate>
+          <div class="st-grid">
+            <div class="st-field wide auth-field">
+            <label for="pw-cur">Current password</label>
+            <div class="auth-wrap"><input class="auth-input" id="pw-cur" type="password" autocomplete="current-password"><button class="auth-eye" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+            <p class="auth-error" aria-live="polite"></p>
+          </div>
+            <div class="st-field wide auth-field">
+            <label for="pw-new">New password</label>
+            <div class="auth-wrap"><input class="auth-input" id="pw-new" type="password" autocomplete="new-password"><button class="auth-eye" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="au-strength" data-strength="pw-new" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <p class="auth-error" aria-live="polite"></p>
+          </div>
+            <div class="st-field wide auth-field">
+            <label for="pw-conf">Confirm new password</label>
+            <div class="auth-wrap"><input class="auth-input" id="pw-conf" type="password" autocomplete="new-password"><button class="auth-eye" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+            <p class="auth-error" aria-live="polite"></p>
+          </div>
+          </div>
+          <div class="st-actions" style="margin-top:1.25rem"><button class="btn btn-orange" type="submit">Update password</button></div>
+        </form>
+      </section>
+
+      <!-- Appearance -->
+      <section class="st-panel" role="tabpanel" id="p-appearance" aria-labelledby="tab-appearance" hidden>
+        <header><h1>Appearance</h1><p>Pick a colour combination. It applies to every page.</p></header>
+        <div class="st-themes" id="st-themes">
+          <button class="st-theme" type="button" data-theme="1" aria-pressed="false"><span>Ocean</span><span class="dots" aria-hidden="true"><i style="--d:#0c2340"></i><i style="--d:#0fb9b1"></i><i style="--d:#ff6f3c"></i><i style="--d:#6aa8ff"></i></span></button>
+          <button class="st-theme" type="button" data-theme="2" aria-pressed="false"><span>Royal</span><span class="dots" aria-hidden="true"><i style="--d:#2b1055"></i><i style="--d:#ffd166"></i><i style="--d:#ff6b9d"></i><i style="--d:#b69cff"></i></span></button>
+          <button class="st-theme" type="button" data-theme="3" aria-pressed="false"><span>Forest</span><span class="dots" aria-hidden="true"><i style="--d:#10301f"></i><i style="--d:#6fdc8c"></i><i style="--d:#ffb454"></i><i style="--d:#8ad7ff"></i></span></button>
+          <button class="st-theme" type="button" data-theme="4" aria-pressed="false"><span>Ember</span><span class="dots" aria-hidden="true"><i style="--d:#331014"></i><i style="--d:#ffc857"></i><i style="--d:#ff7a45"></i><i style="--d:#f78fb3"></i></span></button>
+          <button class="st-theme" type="button" data-theme="5" aria-pressed="false"><span>Neon</span><span class="dots" aria-hidden="true"><i style="--d:#14142b"></i><i style="--d:#00e5c3"></i><i style="--d:#ff4fa3"></i><i style="--d:#ffe14d"></i></span></button>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section class="st-panel" role="tabpanel" id="p-notifications" aria-labelledby="tab-notifications" hidden>
+        <header><h1>Notifications</h1><p>Choose what we remind you about.</p></header>
+        <div class="st-list">
+          <div class="st-item"><div><strong id="nt-daily-l">Daily plan reminder</strong><span>A nudge each morning with your tasks for the day.</span></div><label class="st-switch"><input type="checkbox" id="nt-daily" aria-labelledby="nt-daily-l"><b></b></label></div>
+          <div class="st-item"><div><strong id="nt-streak-l">Streak alerts</strong><span>Get told before a streak is about to break.</span></div><label class="st-switch"><input type="checkbox" id="nt-streak" aria-labelledby="nt-streak-l"><b></b></label></div>
+          <div class="st-item"><div><strong id="nt-weekly-l">Weekly summary</strong><span>An email every Monday with last week's progress.</span></div><label class="st-switch"><input type="checkbox" id="nt-weekly" aria-labelledby="nt-weekly-l"><b></b></label></div>
+          <div class="st-item"><div><strong id="nt-news-l">Product updates</strong><span>Occasional news about new features.</span></div><label class="st-switch"><input type="checkbox" id="nt-news" aria-labelledby="nt-news-l"><b></b></label></div>
+        </div>
+      </section>
+
+      <!-- Account -->
+      <section class="st-panel" role="tabpanel" id="p-account" aria-labelledby="tab-account" hidden>
+        <header><h1>Account</h1><p>Log out on this device or delete your data.</p></header>
+        <div class="st-list">
+          <div class="st-item"><div><strong>Log out</strong><span>You can log back in any time.</span></div><button class="btn btn-ghost btn-sm" type="button" id="st-logout">Log out</button></div>
+          <div class="st-item"><div><strong>Delete account</strong><span>Removes your account and settings from this browser. This cannot be undone.</span></div><button class="btn btn-sm st-btn-danger" type="button" id="st-delete">Delete account</button></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/settings.js"></script>
+</body>
+</html>

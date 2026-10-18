@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add("no-anim");try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Progress tracker - Dashboard</title>
+  <script src="../JS/dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/dashboard.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <input class="sb-toggle" type="checkbox" id="sb-toggle" aria-controls="sidebar">
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <label class="burger" for="sb-toggle">
+      <span class="bars"></span>
+      <span class="sr-only">Toggle sidebar</span>
+    </label>
+
+    <a class="logo" href="../HTML/index.html">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+
+    <form class="d-search" id="d-search" role="search">
+      <label class="sr-only" for="d-q">Search goals</label>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="d-q" type="search" placeholder="Search goals" autocomplete="off">
+    </form>
+
+    <div class="header-actions">
+
+      <!-- =================== header mein theme button  aa jayega ager ye uncoment hoga to ======================== -->
+
+      
+      <!-- <div class="theme">
+        <button class="theme-btn" id="theme-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="theme-menu" title="Change colours">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.6 1.7-1.6H16a5 5 0 0 0 5-5c0-3.9-4-7.3-9-7.3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15.5" cy="7.5" r="1"/></svg>
+          <span class="theme-text">Theme</span>
+        </button>
+        <div class="theme-menu" id="theme-menu" hidden>
+          <h2>Choose a colour combination</h2>
+          <button class="theme-opt" type="button" data-theme="1" aria-pressed="true"><span>Ocean</span><span class="dots" aria-hidden="true"><i style="--d:#0c2340"></i><i style="--d:#0fb9b1"></i><i style="--d:#ff6f3c"></i><i style="--d:#6aa8ff"></i></span></button>
+          <button class="theme-opt" type="button" data-theme="2" aria-pressed="false"><span>Royal</span><span class="dots" aria-hidden="true"><i style="--d:#2b1055"></i><i style="--d:#ffd166"></i><i style="--d:#ff6b9d"></i><i style="--d:#b69cff"></i></span></button>
+          <button class="theme-opt" type="button" data-theme="3" aria-pressed="false"><span>Forest</span><span class="dots" aria-hidden="true"><i style="--d:#10301f"></i><i style="--d:#6fdc8c"></i><i style="--d:#ffb454"></i><i style="--d:#8ad7ff"></i></span></button>
+          <button class="theme-opt" type="button" data-theme="4" aria-pressed="false"><span>Ember</span><span class="dots" aria-hidden="true"><i style="--d:#331014"></i><i style="--d:#ffc857"></i><i style="--d:#ff7a45"></i><i style="--d:#f78fb3"></i></span></button>
+          <button class="theme-opt" type="button" data-theme="5" aria-pressed="false"><span>Neon</span><span class="dots" aria-hidden="true"><i style="--d:#14142b"></i><i style="--d:#00e5c3"></i><i style="--d:#ff4fa3"></i><i style="--d:#ffe14d"></i></span></button>
+        </div>
+      </div> -->
+      <button class="d-icon-btn" type="button" aria-label="Notifications, 2 new">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <span class="d-dot"></span>
+      </button>
+      <button class="d-avatar" type="button" aria-label="Your account">A</button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+      <div class="sb-profile">
+        <div class="sb-profile-top">
+          <span class="sb-avatar" id="sb-avatar" aria-hidden="true">A</span>
+          <span class="sb-label sb-profile-text">
+            <strong id="sb-name">Alex</strong>
+            <span id="sb-email">alex@example.com</span>
+          </span>
+        </div>
+        <button class="sb-edit" id="open-profile" type="button" title="Edit profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+          <span class="sb-label">Edit profile</span>
+        </button>
+      </div>
+
+      <div class="sb-section">
+        <p class="sb-heading">Menu</p>
+        <a class="sb-link" href="../HTML/dashboard.html" aria-current="page" title="Dashboard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg>
+          <span class="sb-label">Dashboard</span>
+        </a>
+        <a class="sb-link" href="#goals" title="My goals">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+          <span class="sb-label">My goals</span>
+        </a>
+        <a class="sb-link" href="#activity" title="Progress">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-8M21 20H3"/></svg>
+          <span class="sb-label">Progress</span>
+        </a>
+        <a class="sb-link" href="#upcoming" title="Calendar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <span class="sb-label">Calendar</span>
+        </a>
+      </div>
+
+      <div class="sb-section">
+        <p class="sb-heading">Account</p>
+        <a class="sb-link" href="index.html" title="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+          <span class="sb-label">Home</span>
+        </a>
+        <a class="sb-link" href="#settings" id="open-settings" title="Settings" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+          <span class="sb-label">Settings</span>
+        </a>
+      </div>
+
+      <div class="sb-widget">
+        <strong id="sb-pct">0%</strong>
+        <span>of the last 7 days' tasks done</span>
+        <div class="sb-meter" aria-hidden="true"><i id="sb-meter" style="width: 0%"></i></div>
+      </div>
+
+      <label class="sb-link sb-collapse" for="sb-toggle" title="Collapse or expand sidebar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        <span class="sb-label">Collapse</span>
+      </label>
+    </aside>
+
+    <label class="scrim" for="sb-toggle" aria-hidden="true"></label>
+
+    <div class="content">
+      <main id="main" class="dash">
+
+        <div class="d-head">
+          <div>
+            <h1 id="d-greeting" data-name="Alex">Welcome back</h1>
+            <p id="d-date"></p>
+          </div>
+          <a class="btn btn-orange" id="d-add-task" href="../HTML/add-task.html">Add a task</a>
+        </div>
+
+        <!-- Today -->
+        <section class="d-panel d-today" aria-labelledby="today-title">
+          <div class="d-panel-head">
+            <div>
+              <h2 id="today-title">Today's plan</h2>
+              <p id="d-today-msg"></p>
+            </div>
+          </div>
+          <div class="d-today-body">
+            <div class="d-ring" id="d-ring" role="img" aria-label="Today's progress">
+              <span class="d-ring-dot" aria-hidden="true"></span>
+              <span class="d-ring-num"><b id="d-done">0</b><span>of <span id="d-total">0</span> done</span></span>
+            </div>
+            <div>
+              <ul class="d-tasks" id="d-tasks"></ul>
+              <form class="d-add" id="d-add" action="../HTML/add-task.html" method="get">
+                <label class="sr-only" for="d-new">New task</label>
+                <input id="d-new" name="name" type="text" maxlength="80" placeholder="Add a task for today" autocomplete="off">
+                <button class="btn btn-orange btn-sm" type="submit">Add</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="d-panel d-stats" aria-label="Last 7 days at a glance">
+          <dl>
+          <div class="d-stat">
+            <dt>Active goals</dt>
+            <dd class="d-val" id="s-goals">0</dd>
+            <dd class="d-note" id="s-goals-note"></dd>
+            <dd><svg class="d-spark" id="sp-goals" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg></dd>
+          </div>
+          <div class="d-stat">
+            <dt>Tasks done</dt>
+            <dd class="d-val" id="s-tasks">0</dd>
+            <dd class="d-note" id="s-tasks-note"></dd>
+            <dd><svg class="d-spark" id="sp-tasks" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg></dd>
+          </div>
+          <div class="d-stat">
+            <dt>Current streak</dt>
+            <dd class="d-val" id="s-streak">0</dd>
+            <dd class="d-note" id="s-streak-note"></dd>
+            <dd><svg class="d-spark" id="sp-streak" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg></dd>
+          </div>
+          <div class="d-stat">
+            <dt>Focus time</dt>
+            <dd class="d-val" id="s-focus">0</dd>
+            <dd class="d-note" id="s-focus-note"></dd>
+            <dd><svg class="d-spark" id="sp-focus" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg></dd>
+          </div>
+          </dl>
+        </section>
+
+        <!-- Activity chart -->
+        <section class="d-panel d-activity" id="activity" data-type="bar" aria-labelledby="activity-title">
+          <div class="d-panel-head">
+            <div>
+              <h2 id="activity-title">Tasks completed</h2>
+              <p id="d-chart-sum"></p>
+            </div>
+            <div class="d-ctrls">
+              <div class="d-seg" id="d-type" role="group" aria-label="Graph type">
+                <button type="button" data-type="bar" aria-pressed="true">Bars</button>
+                <button type="button" data-type="line" aria-pressed="false">Line</button>
+              </div>
+              <div class="d-seg" id="d-range" role="group" aria-label="Time range">
+                <button type="button" data-range="0" aria-pressed="false">Today</button>
+                <button type="button" data-range="7" aria-pressed="true">7 days</button>
+                <button type="button" data-range="4" aria-pressed="false">4 weeks</button>
+                <button type="button" data-range="12" aria-pressed="false">12 weeks</button>
+              </div>
+            </div>
+          </div>
+          <div class="d-chart-wrap">
+            <div class="d-yaxis" id="d-yaxis" aria-hidden="true"></div>
+            <div class="d-plot"><div class="d-cols" id="d-cols" role="list"></div><div class="d-goal-line" id="d-goal-line" aria-hidden="true"><span id="d-goal-line-text"></span></div></div>
+            <div class="d-xlabels" id="d-xlabels" aria-hidden="true"></div>
+          </div>
+          <div class="d-legend">
+            <span class="only-bar"><i style="--sw: var(--teal)"></i>Worked</span>
+            <span class="only-bar"><i style="--sw: var(--sky-light)"></i>Planned</span>
+            <span class="only-line"><i class="sw-grad"></i>Worked (green = high, red = low)</span>
+            <span class="only-line"><i class="sw-dash"></i>Planned</span>
+            <span><i class="sw-goal"></i><span id="d-goal-legend"></span></span>
+          </div>
+        </section>
+
+        <!-- Consistency -->
+        <section class="d-panel d-consist" aria-labelledby="consist-title">
+          <div class="d-panel-head">
+            <div>
+              <h2 id="consist-title">Consistency</h2>
+              <p id="d-streak-sum"></p>
+            </div>
+          </div>
+          <div class="d-heat-wrap" id="d-heat-wrap">
+            <div class="d-heat" id="d-heat" role="group" aria-label="Work done each day over the last 16 weeks. Use the arrow keys to move between days."></div>
+            <div class="d-heat-months" id="d-heat-months" aria-hidden="true"></div>
+            <div class="d-heat-pop" id="d-heat-pop" role="status" hidden></div>
+          </div>
+          <div class="d-heat-key" aria-hidden="true"><span>Fewer</span><i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i><span>More</span></div>
+        </section>
+
+        <!-- Goals -->
+        <section class="d-panel d-goals" id="goals" aria-labelledby="goals-title">
+          <div class="d-panel-head">
+            <div>
+              <h2 id="goals-title">Goals</h2>
+              <p id="d-goal-count" aria-live="polite"></p>
+            </div>
+            <div class="d-seg" id="d-filter" role="group" aria-label="Filter goals">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="on" aria-pressed="false">On track</button>
+              <button type="button" data-filter="risk" aria-pressed="false" href="../HTML/goal.html">Needs attention</button>
+              <button type="button" data-filter="near" aria-pressed="false">Almost done</button>
+            </div>
+          </div>
+          <ul class="d-goal-list" id="d-goal-list">
+          <li class="d-goal" data-status="near" data-hours="12.5" data-daily="0.5" data-text="practice typing every day skill" style="--c: var(--sky)">
+            <div class="d-goal-main"><h3>Practice typing every day</h3><p>Skill</p></div>
+            <div class="d-goal-prog">
+              <div class="d-bar" role="progressbar" aria-label="Practice typing every day progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92" style="--w: 92%"><i></i></div>
+              <span><b>92%</b> done, 23 of 25 tasks, 12.5 h goal</span>
+            </div>
+            <div class="d-goal-meta"><span class="d-status near">Almost done</span><time datetime="2026-10-20">Due Oct 20</time></div>
+          </li>
+          <li class="d-goal" data-status="risk" data-hours="15" data-daily="1" data-text="finish login and signup project" style="--c: var(--orange)">
+            <div class="d-goal-main"><h3>Finish login and signup</h3><p>Project</p></div>
+            <div class="d-goal-prog">
+              <div class="d-bar" role="progressbar" aria-label="Finish login and signup progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" style="--w: 40%"><i></i></div>
+              <span><b>40%</b> done, 8 of 20 tasks, 15 h goal</span>
+            </div>
+            <div class="d-goal-meta"><button class="d-status risk" type="button" title="See details of this goal">Needs attention</button><time datetime="2026-10-30">Due Oct 30</time></div>
+          </li>
+          <li class="d-goal" data-status="on" data-hours="17" data-daily="1" data-text="learn react basics learning" style="--c: var(--teal)">
+            <div class="d-goal-main"><h3>Learn React basics</h3><p>Learning</p></div>
+            <div class="d-goal-prog">
+              <div class="d-bar" role="progressbar" aria-label="Learn React basics progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68" style="--w: 68%"><i></i></div>
+              <span><b>68%</b> done, 17 of 25 tasks, 17 h goal</span>
+            </div>
+            <div class="d-goal-meta"><span class="d-status on">On track</span><time datetime="2026-11-14">Due Nov 14</time></div>
+          </li>
+          <li class="d-goal" data-status="risk" data-hours="12.5" data-daily="0.5" data-text="portfolio redesign design" style="--c: var(--orange)">
+            <div class="d-goal-main"><h3>Portfolio redesign</h3><p>Design</p></div>
+            <div class="d-goal-prog">
+              <div class="d-bar" role="progressbar" aria-label="Portfolio redesign progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" style="--w: 20%"><i></i></div>
+              <span><b>20%</b> done, 3 of 15 tasks, 12.5 h goal</span>
+            </div>
+            <div class="d-goal-meta"><button class="d-status risk" type="button" title="See details of this goal">Needs attention</button><time datetime="2026-11-28">Due Nov 28</time></div>
+          </li>
+          <li class="d-goal" data-status="on" data-hours="40" data-daily="0.5" data-text="read 12 books this year reading" style="--c: var(--teal)">
+            <div class="d-goal-main"><h3>Read 12 books this year</h3><p>Reading</p></div>
+            <div class="d-goal-prog">
+              <div class="d-bar" role="progressbar" aria-label="Read 12 books this year progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" style="--w: 75%"><i></i></div>
+              <span><b>75%</b> done, 9 of 12 tasks, 40 h goal</span>
+            </div>
+            <div class="d-goal-meta"><span class="d-status on">On track</span><time datetime="2026-12-31">Due Dec 31</time></div>
+          </li>
+          </ul>
+          <p class="d-empty" id="d-empty" hidden>No goals match. Clear the search or choose another filter.</p>
+        </section>
+
+        <!-- Coming up -->
+        <section class="d-panel d-upcoming" id="upcoming" aria-labelledby="up-title">
+          <div class="d-panel-head">
+            <div>
+              <h2 id="up-title">Coming up</h2>
+              <p>The next 7 days</p>
+            </div>
+          </div>
+          <ul class="d-up-list" id="d-up-list"></ul>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============ EDIT PROFILE ============ -->
+  <dialog class="d-dialog" id="profile-dialog" aria-labelledby="pd-title">
+    <form class="d-dialog-body" id="profile-form" novalidate>
+      <h2 id="pd-title">Edit profile</h2>
+      <div class="pd-photo">
+        <span class="sb-avatar sb-avatar-lg" id="pd-avatar" aria-hidden="true">A</span>
+        <div class="pd-photo-actions">
+          <input class="sr-only" type="file" id="pd-file" accept="image/*">
+          <label class="d-btn-ghost" for="pd-file">Change photo</label>
+          <button class="d-btn-ghost" type="button" id="pd-remove">Remove</button>
+        </div>
+      </div>
+      <div class="pd-field">
+        <label for="pd-name">Full name</label>
+        <input id="pd-name" type="text" maxlength="40" autocomplete="name">
+        <p class="pd-err" id="pd-err" role="alert" hidden></p>
+      </div>
+      <div class="pd-field">
+        <label for="pd-email">Email</label>
+        <input id="pd-email" type="email" maxlength="80" autocomplete="email">
+      </div>
+      <div class="d-dialog-actions">
+        <button class="d-btn-ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn-orange btn-sm" type="submit">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ SETTINGS ============ -->
+  <dialog class="d-dialog d-dialog-wide" id="settings-dialog" aria-labelledby="st-title">
+    <div class="d-dialog-body">
+      <div class="st-head">
+        <h2 id="st-title">Settings</h2>
+        <button class="st-x" type="button" data-close aria-label="Close settings">&times;</button>
+      </div>
+
+     <!-- =============== theme select karne wala button aa jayega ============== -->
+
+      <!-- <section class="st-sec" aria-labelledby="st-h-theme">
+        <h3 id="st-h-theme">Theme</h3>
+        <div class="st-themes" id="st-themes"></div>
+      </section> -->
+
+      <section class="st-sec" aria-labelledby="st-h-profile">
+        <h3 id="st-h-profile">Profile</h3>
+        <div><button class="d-btn-ghost" id="st-profile" type="button">Edit profile</button></div>
+      </section>
+
+      <section class="st-sec" aria-labelledby="st-h-tasks">
+        <h3 id="st-h-tasks">Tasks</h3>
+        <div><a class="btn btn-orange btn-sm" href="../HTML/add-task.html">Add task</a></div>
+        <ul class="st-tasks" id="st-tasks"></ul>
+      </section>
+
+      <section class="st-sec" aria-labelledby="st-h-anim">
+        <h3 id="st-h-anim">Animation</h3>
+        <label class="d-switch" for="set-star">
+          <span class="d-switch-text">
+            <b>Star animation</b>
+            <small>When you complete a task, a small star sweeps across the text and turns it green. Turn this off to get a plain green fade instead.</small>
+          </span>
+          <input type="checkbox" role="switch" id="set-star" checked>
+          <span class="d-switch-ui" aria-hidden="true"></span>
+        </label>
+      </section>
+
+      <div class="d-dialog-actions">
+        <button class="btn btn-orange btn-sm" type="button" data-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ============ GOAL DETAILS (opens from the orange Needs attention badge) ============ -->
+  <dialog class="d-dialog d-dialog-goal" id="goal-dialog" aria-labelledby="gd-title">
+    <div class="d-dialog-body">
+      <div class="st-head">
+        <div class="gd-title">
+          <h2 id="gd-title"></h2>
+          <p id="gd-sub"></p>
+        </div>
+        <button class="st-x" type="button" data-close aria-label="Close goal details">&times;</button>
+      </div>
+
+      <div class="gd-top">
+        <div class="gd-prog">
+          <div class="d-bar" id="gd-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+          <span id="gd-prog-text"></span>
+        </div>
+        <span class="d-status risk">Needs attention</span>
+      </div>
+
+      <p class="gd-lead" id="gd-lead"></p>
+
+      <dl class="gd-stats">
+        <div class="gd-stat"><dt>Last month</dt><dd><span class="gd-val" id="gd-s1"></span><span class="gd-note" id="gd-n1"></span></dd></div>
+        <div class="gd-stat"><dt>This month so far</dt><dd><span class="gd-val" id="gd-s2"></span><span class="gd-note" id="gd-n2"></span></dd></div>
+        <div class="gd-stat"><dt>Compared with last month</dt><dd><span class="gd-val" id="gd-s3"></span><span class="gd-note" id="gd-n3"></span></dd></div>
+        <div class="gd-stat"><dt>Needed to finish on time</dt><dd><span class="gd-val" id="gd-s4"></span><span class="gd-note" id="gd-n4"></span></dd></div>
+      </dl>
+
+      <!-- Attention given: same graph as Tasks completed, for this one goal -->
+      <section class="d-panel d-activity gd-chart" id="gd-activity" data-type="bar" aria-labelledby="gd-chart-title">
+        <div class="d-panel-head">
+          <div>
+            <h2 id="gd-chart-title">Attention given</h2>
+            <p id="gd-chart-sum"></p>
+          </div>
+          <div class="d-ctrls">
+            <div class="d-seg" id="gd-type" role="group" aria-label="Graph type">
+              <button type="button" data-type="bar" aria-pressed="true">Bars</button>
+              <button type="button" data-type="line" aria-pressed="false">Line</button>
+            </div>
+            <div class="d-seg" id="gd-range" role="group" aria-label="Time range">
+              <button type="button" data-range="this" aria-pressed="true">This month</button>
+              <button type="button" data-range="last" aria-pressed="false">Last month</button>
+              <button type="button" data-range="six" aria-pressed="false">6 months</button>
+            </div>
+          </div>
+        </div>
+        <div class="d-chart-wrap">
+          <div class="d-yaxis" id="gd-yaxis" aria-hidden="true"></div>
+          <div class="d-plot" id="gd-plot"><div class="d-cols" id="gd-cols" role="list"></div></div>
+          <div class="d-xlabels" id="gd-xlabels" aria-hidden="true"></div>
+        </div>
+        <div class="d-legend">
+          <span class="only-bar"><i style="--sw: var(--teal)"></i>Time given</span>
+          <span class="only-bar"><i style="--sw: var(--sky-light)"></i>Planned</span>
+          <span class="only-line"><i class="sw-grad"></i>Time given (green = high, red = low)</span>
+          <span class="only-line"><i class="sw-dash"></i>Planned</span>
+        </div>
+      </section>
+
+      <!-- Consistency for this goal -->
+      <section class="d-panel d-consist" aria-labelledby="gd-consist-title">
+        <div class="d-panel-head">
+          <div>
+            <h2 id="gd-consist-title">Consistency</h2>
+            <p id="gd-streak-sum"></p>
+          </div>
+        </div>
+        <div class="d-heat-wrap" id="gd-heat-wrap">
+          <div class="d-heat" id="gd-heat" role="group" aria-label="Time given to this goal each day over the last 16 weeks. Use the arrow keys to move between days."></div>
+          <div class="d-heat-months" id="gd-heat-months" aria-hidden="true"></div>
+          <div class="d-heat-pop" id="gd-heat-pop" role="status" hidden></div>
+        </div>
+        <div class="d-heat-key" aria-hidden="true"><span>Fewer</span><i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i><span>More</span></div>
+      </section>
+
+      <div class="d-dialog-actions">
+        <button class="btn btn-orange btn-sm" type="button" data-close>Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../JS/tasks-store.js"></script>
+  <script src="../JS/dashboard.js"></script>
+  <script src="../JS/goal-detail.js"></script>
+</body>
+</html>

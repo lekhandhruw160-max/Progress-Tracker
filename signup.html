@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Sign up - Progress tracker</title>
+  <script src="../JS/dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/auth.css">
+</head>
+<body data-page="signup">
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <a class="logo" href="../HTML/index.html">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+    <div class="header-actions">
+      <span class="au-top-link">Have an account?</span>
+      <a class="btn btn-ghost btn-sm" href="login.html">Log in</a>
+    </div>
+  </header>
+
+  <main id="main" class="au">
+    <aside class="au-stage" aria-hidden="true">
+      <div class="au-cells"></div>
+      <div class="au-copy">
+        <h2>Turn every day into visible progress</h2>
+        <p>Set goals, plan your tasks and watch your streak grow.</p>
+      </div>
+      <div class="hero-visual">
+        <div class="obj">
+          <div class="orbit"></div>
+          <div class="ring"></div>
+          <div class="ring-num"><strong>72%</strong><span>this week</span></div>
+          <div class="task-card"><b>Finish login page</b><i></i></div>
+          <div class="chip">+3 tasks today</div>
+          <div class="sphere"></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="au-side">
+      <section class="au-card" id="au-card" aria-labelledby="su-title">
+        <div class="au-step" data-step="form">
+          <div>
+            <h1 id="su-title">Create your account</h1>
+            <p class="au-sub">Start tracking your goals in a minute.</p>
+          </div>
+          <form class="au-form" id="su" novalidate>
+            <div class="auth-field">
+          <label class="sr-only" for="su-name">Full name</label>
+          <div class="auth-wrap"><input class="auth-input" id="su-name" type="text" placeholder="Full name" autocomplete="name"></div>
+          <p class="auth-error" aria-live="polite"></p>
+        </div>
+            <div class="auth-field">
+          <label class="sr-only" for="su-email">Email</label>
+          <div class="auth-wrap"><input class="auth-input" id="su-email" type="email" placeholder="Enter your email" autocomplete="email"></div>
+          <p class="auth-error" aria-live="polite"></p>
+        </div>
+            <div class="auth-field">
+          <label class="sr-only" for="su-pass">Password</label>
+          <div class="auth-wrap"><input class="auth-input" id="su-pass" type="password" placeholder="Create a password" autocomplete="new-password"><button class="auth-eye" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button></div><p class="auth-hint">Use 8 or more characters with a letter and a number</p><div class="au-strength" data-strength="su-pass" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p class="auth-error" aria-live="polite"></p>
+        </div>
+            <div class="auth-field">
+          <label class="sr-only" for="su-confirm">Confirm password</label>
+          <div class="auth-wrap"><input class="auth-input" id="su-confirm" type="password" placeholder="Confirm password" autocomplete="new-password"><button class="auth-eye" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+          <p class="auth-error" aria-live="polite"></p>
+        </div>
+            <div class="auth-field">
+              <label class="auth-check"><input id="su-terms" type="checkbox"><span>I agree to the <a href="#">Terms &amp; Conditions</a></span></label>
+              <p class="auth-error" aria-live="polite"></p>
+            </div>
+            <button class="btn btn-orange btn-block" type="submit">Create account</button>
+          </form>
+          <p class="auth-or"><span>OR</span></p>
+          <button class="btn btn-ghost btn-block" type="button" id="su-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continue with Google</button>
+          <p class="au-note" id="su-gnote" role="status"></p>
+          <p class="au-foot">Already have an account? <a href="login.html">Log in</a></p>
+        </div>
+
+        <div class="au-step" data-step="code" hidden>
+          <div>
+            <h1>Verify your email</h1>
+            <p class="au-sub">We sent a 6-digit code to <b id="su-sent"></b>.</p>
+          </div>
+          <form class="au-form" id="su-verify" novalidate>
+            <div class="au-otp" id="su-otp" role="group" aria-label="6-digit code"><input type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1"><input type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2"><input type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3"><input type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4"><input type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 5"><input type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 6"></div>
+            <p class="auth-status" id="su-status" role="status"></p>
+            <p class="au-note" id="su-note" role="status"></p>
+            <button class="btn btn-orange btn-block" type="submit">Verify and continue</button>
+          </form>
+          <div class="au-row">
+            <button class="au-link" type="button" id="su-resend">Send a new code</button>
+            <button class="au-link" type="button" id="su-change">Change email</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="../JS/auth.js"></script>
+</body>
+</html>

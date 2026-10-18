@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Goal details - Progress tracker</title>
+  <script src="../JS/dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/style.css">
+  <link rel="stylesheet" href="../CSS/dashboard.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <a class="logo" href="../CSS/dashboard.css">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+    <div class="header-actions">
+      <a class="d-btn-ghost" href="../HTML/dashboard.html#goals">Back to goals</a>
+    </div>
+  </header>
+
+  <main id="main" class="gd-wrap">
+    <section class="d-panel gd-missing" id="gd-missing" hidden>
+      <h1>We could not find that goal</h1>
+      <p>Open it again from the Goals list on the dashboard.</p>
+      <a class="btn btn-orange btn-sm" href="../HTML/dashboard.html#goals">Back to goals</a>
+    </section>
+
+    <div class="gd-content" id="gd-content">
+      <div class="gd-head">
+        <div class="gd-title">
+          <h1 id="gd-title"></h1>
+          <p id="gd-sub"></p>
+        </div>
+        <div class="gd-top">
+          <div class="gd-prog">
+            <div class="d-bar" id="gd-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+            <span id="gd-prog-text"></span>
+          </div>
+          <span class="d-status risk" id="gd-badge">Needs attention</span>
+        </div>
+      </div>
+
+      <p class="gd-lead" id="gd-lead"></p>
+
+      <dl class="gd-stats">
+        <div class="gd-stat"><dt>Last month</dt><dd><span class="gd-val" id="gd-s1"></span><span class="gd-note" id="gd-n1"></span></dd></div>
+        <div class="gd-stat"><dt>This month so far</dt><dd><span class="gd-val" id="gd-s2"></span><span class="gd-note" id="gd-n2"></span></dd></div>
+        <div class="gd-stat"><dt>Compared with last month</dt><dd><span class="gd-val" id="gd-s3"></span><span class="gd-note" id="gd-n3"></span></dd></div>
+        <div class="gd-stat"><dt>Needed to finish on time</dt><dd><span class="gd-val" id="gd-s4"></span><span class="gd-note" id="gd-n4"></span></dd></div>
+      </dl>
+
+      <!-- Attention given: same graph as Tasks completed, for this one goal -->
+      <section class="d-panel d-activity gd-chart" id="gd-activity" data-type="bar" aria-labelledby="gd-chart-title">
+        <div class="d-panel-head">
+          <div>
+            <h2 id="gd-chart-title">Attention given</h2>
+            <p id="gd-chart-sum"></p>
+          </div>
+          <div class="d-ctrls">
+            <div class="d-seg" id="gd-type" role="group" aria-label="Graph type">
+              <button type="button" data-type="bar" aria-pressed="true">Bars</button>
+              <button type="button" data-type="line" aria-pressed="false">Line</button>
+            </div>
+            <div class="d-seg" id="gd-range" role="group" aria-label="Time range">
+              <button type="button" data-range="this" aria-pressed="true">This month</button>
+              <button type="button" data-range="last" aria-pressed="false">Last month</button>
+              <button type="button" data-range="six" aria-pressed="false">6 months</button>
+            </div>
+          </div>
+        </div>
+        <div class="d-chart-wrap">
+          <div class="d-yaxis" id="gd-yaxis" aria-hidden="true"></div>
+          <div class="d-plot" id="gd-plot"><div class="d-cols" id="gd-cols" role="list"></div></div>
+          <div class="d-xlabels" id="gd-xlabels" aria-hidden="true"></div>
+        </div>
+        <div class="d-legend">
+          <span class="only-bar"><i style="--sw: var(--teal)"></i>Time given</span>
+          <span class="only-bar"><i style="--sw: var(--sky-light)"></i>Planned</span>
+          <span class="only-line"><i class="sw-grad"></i>Time given (green = high, red = low)</span>
+          <span class="only-line"><i class="sw-dash"></i>Planned</span>
+        </div>
+      </section>
+
+      <!-- Consistency for this goal -->
+      <section class="d-panel d-consist" aria-labelledby="gd-consist-title">
+        <div class="d-panel-head">
+          <div>
+            <h2 id="gd-consist-title">Consistency</h2>
+            <p id="gd-streak-sum"></p>
+          </div>
+        </div>
+        <div class="d-heat-wrap" id="gd-heat-wrap">
+          <div class="d-heat" id="gd-heat" role="group" aria-label="Time given to this goal each day over the last 16 weeks. Use the arrow keys to move between days."></div>
+          <div class="d-heat-months" id="gd-heat-months" aria-hidden="true"></div>
+          <div class="d-heat-pop" id="gd-heat-pop" role="status" hidden></div>
+        </div>
+        <div class="d-heat-key" aria-hidden="true"><span>Fewer</span><i data-l="0"></i><i data-l="1"></i><i data-l="2"></i><i data-l="3"></i><i data-l="4"></i><span>More</span></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="../JS/tasks-store.js"></script>
+  <script src="../JS/goal-detail.js"></script>
+</body>
+</html>
