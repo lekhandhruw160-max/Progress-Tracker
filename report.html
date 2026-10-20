@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem("pt-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <title>Report - Progress tracker</title>
+  <script src="dark-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ================= CSS files ================= -->
+
+  <link rel="stylesheet" href="dark.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="header">
+    <a class="logo" href="dashboard.html">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-name">Progress tracker</span>
+    </a>
+    <div class="header-actions">
+      <a class="d-btn-ghost" href="dashboard.html">Back to dashboard</a>
+    </div>
+  </header>
+
+  <main id="main" class="rp-wrap">
+
+    <!-- Controls (not printed) -->
+    <section class="d-panel rp-bar no-print" aria-labelledby="rp-title">
+      <div>
+        <h1 id="rp-title">Generate report</h1>
+        <p class="rp-lead">Choose a period and what to include. Then print it, or choose "Save as PDF" in the print window.</p>
+      </div>
+
+      <div class="rp-controls">
+        <div class="rp-ctl">
+          <span class="rp-label" id="rp-scope-l">1. Report for</span>
+          <div class="d-seg" id="rp-scope" role="group" aria-labelledby="rp-scope-l">
+            <button type="button" data-scope="all" aria-pressed="true">All tasks</button>
+            <button type="button" data-scope="task" aria-pressed="false">One task</button>
+          </div>
+          <div class="rp-pick" id="rp-pick" hidden>
+            <label class="sr-only" for="rp-task">Choose a task</label>
+            <select class="rp-select" id="rp-task"></select>
+          </div>
+        </div>
+
+        <div class="rp-ctl">
+          <span class="rp-label" id="rp-period-l">2. Period</span>
+          <div class="d-seg" id="rp-period" role="group" aria-labelledby="rp-period-l">
+            <button type="button" data-period="1" aria-pressed="false">Today</button>
+            <button type="button" data-period="7" aria-pressed="true">7 days</button>
+            <button type="button" data-period="month" aria-pressed="false">This month</button>
+            <button type="button" data-period="6m" aria-pressed="false">6 months</button>
+          </div>
+        </div>
+
+        <fieldset class="rp-ctl">
+          <legend class="rp-label">3. Include</legend>
+          <div class="rp-opts">
+            <label class="rp-opt"><input type="checkbox" id="rp-o-graph" checked> Line graph</label>
+            <label class="rp-opt"><input type="checkbox" id="rp-o-tasks" checked> Task details</label>
+            <label class="rp-opt"><input type="checkbox" id="rp-o-log" checked> Daily log</label>
+            <label class="rp-opt"><input type="checkbox" id="rp-o-goals" checked> Goals</label>
+            <label class="rp-opt"><input type="checkbox" id="rp-o-notes" checked> Notes and signature lines</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="rp-actions">
+        <a class="d-btn-ghost" href="dashboard.html">Cancel</a>
+        <button class="btn btn-orange" type="button" id="rp-print">Print report</button>
+      </div>
+      <p class="rp-note" id="rp-note" role="status" hidden></p>
+    </section>
+
+    <!-- The report itself (this is what gets printed) -->
+    <article class="rp-sheet" id="rp-sheet" aria-label="Report preview"></article>
+  </main>
+
+  <script src="tasks-store.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
